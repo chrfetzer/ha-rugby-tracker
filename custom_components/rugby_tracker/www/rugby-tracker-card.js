@@ -52,7 +52,7 @@ class RugbyTrackerCard extends HTMLElement {
     const entity = Object.keys(hass.states).find(
       (id) => id.startsWith("sensor.") && hass.states[id].attributes.rugby_tracker
     );
-    return { entity: entity || "sensor.south_africa_spiele" };
+    return { entity: entity || "sensor.south_africa_matches" };
   }
 
   setConfig(config) {
@@ -93,7 +93,7 @@ class RugbyTrackerCard extends HTMLElement {
   /* ---------------------------------------------------------------- helpers */
 
   get _lang() {
-    const lang = this._config.language || this._hass?.locale?.language || this._hass?.language || "de";
+    const lang = this._config.language || "en";
     return lang.startsWith("de") ? "de" : "en";
   }
 
@@ -552,7 +552,7 @@ if (!window.customCards.some((c) => c.type === "rugby-tracker-card")) {
   window.customCards.push({
     type: "rugby-tracker-card",
     name: "Rugby Tracker",
-    description: "Live-Spiele, Spielplan, Ergebnisse, Tabelle und Aufstellungen eines Rugby-Teams.",
+    description: "Live scores, fixtures, results, standings and lineups for a rugby team.",
     preview: true,
   });
 }

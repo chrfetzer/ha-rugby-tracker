@@ -25,6 +25,6 @@ if (p.get("live")) {
     {type:"try",team_id:m.away.id,player:"Damian de Allende",minute:"51'",period:2}];
 }
 if (p.get("dark")) document.body.classList.add("dark");
-const hass = {themes:{darkMode: !!p.get("dark")}, language:"de", locale:{language:"de"}, config:{time_zone:"Europe/Berlin"}, states:{"sensor.south_africa_spiele":{state:"6",attributes:attrs}}};
-for (const id of ["a","b"]) { const c = document.getElementById(id); c.setConfig({entity:"sensor.south_africa_spiele", default_tab: p.get("tab") || "upcoming", ...(p.get("badges") ? {badges: p.get("badges")} : {})}); c.hass = hass; }
+const hass = {themes:{darkMode: !!p.get("dark")}, language:"de", locale:{language:"de"}, config:{time_zone:"Europe/Berlin"}, states:{"sensor.south_africa_matches":{state:"6",attributes:attrs}}};
+for (const id of ["a","b"]) { const c = document.getElementById(id); c.setConfig({entity:"sensor.south_africa_matches", default_tab: p.get("tab") || "upcoming", ...(p.get("lang") ? {language: p.get("lang")} : {}), ...(p.get("badges") ? {badges: p.get("badges")} : {})}); c.hass = hass; }
 </script></body></html>

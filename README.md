@@ -9,7 +9,7 @@ Includes a dashboard card made for wall tablets:
 - **Live** hero with score, match minute, scoring timeline (tries, kicks, cards) – refreshes every 20 s
 - **Next match** with countdown, venue and German TV channels (ProSieben MAXX / ran.de / Joyn by default)
 - **Fixtures**, **results grouped by tournament** (filter chips), **standings** and **lineups**
-- Team crests (Springbok, fern, Wallaby …) with country-flag fallback, German/English, follows your HA light/dark theme
+- Team crests (Springbok, fern, Wallaby …) with country-flag fallback, English (German optional), follows your HA light/dark theme
 - Works for any team ESPN covers (national sides, clubs like the Bulls or Stormers); add one entry per team
 
 ## Installation (HACS)
@@ -25,7 +25,7 @@ The card is registered by the integration itself; no extra dashboard resource is
 
 ```yaml
 type: custom:rugby-tracker-card
-entity: sensor.south_africa_spiele   # the "Matches"/"Spiele" sensor
+entity: sensor.south_africa_matches   # the "Matches" sensor
 ```
 
 | Option | Default | Description |
@@ -36,7 +36,7 @@ entity: sensor.south_africa_spiele   # the "Matches"/"Spiele" sensor
 | `default_tab` | `upcoming` | `upcoming`, `results`, `table`, `lineup` |
 | `upcoming_count` | `8` | Number of fixtures in the list |
 | `show_timeline` | `true` | Scoring timeline in the live/last-match panel |
-| `language` | HA language | `de` or `en` |
+| `language` | `en` | `en` or `de` |
 | `accent_color` | team colour | Any CSS colour, e.g. `"#007a4d"` |
 | `max_height` | – | e.g. `600px` to make the tab content scroll |
 
@@ -44,9 +44,9 @@ entity: sensor.south_africa_spiele   # the "Matches"/"Spiele" sensor
 
 | Entity | State | Notes |
 | --- | --- | --- |
-| `sensor.<team>_spiele` | upcoming match count | All data for the card (not written to the recorder) |
-| `sensor.<team>_nachstes_spiel` | kickoff (timestamp) | Opponent, competition, venue, `tv`, flags |
-| `sensor.<team>_letztes_ergebnis` | e.g. `43:28` | `result` = `W`/`L`/`D` |
+| `sensor.<team>_matches` | upcoming match count | All data for the card (not written to the recorder) |
+| `sensor.<team>_next_match` | kickoff (timestamp) | Opponent, competition, venue, `tv`, flags |
+| `sensor.<team>_last_result` | e.g. `43:28` | `result` = `W`/`L`/`D` |
 | `binary_sensor.<team>_live` | on during a match | Live score and clock as attributes |
 
 ## Notifications
@@ -59,7 +59,7 @@ Data includes `team`, `opponent`, `team_score`, `opponent_score`, `competition`,
 
 ```yaml
 automation:
-  - alias: Springboks – Anpfiff bald
+  - alias: Springboks – kickoff soon
     triggers:
       - trigger: event
         event_type: rugby_tracker_event
@@ -69,10 +69,10 @@ automation:
         data:
           title: "🏉 {{ trigger.event.data.team }} vs {{ trigger.event.data.opponent }}"
           message: >-
-            Anpfiff in {{ trigger.event.data.minutes }} Min –
-            {{ trigger.event.data.competition }} auf {{ trigger.event.data.tv | join(', ') }}
+            Kickoff in {{ trigger.event.data.minutes }} min –
+            {{ trigger.event.data.competition }} on {{ trigger.event.data.tv | join(', ') }}
 
-  - alias: Springboks – Punkte
+  - alias: Springboks – score
     triggers:
       - trigger: event
         event_type: rugby_tracker_event
@@ -85,7 +85,7 @@ automation:
             {{ trigger.event.data.team_score }}:{{ trigger.event.data.opponent_score }}
             ({{ trigger.event.data.clock }})
           message: >-
-            {{ trigger.event.data.score_type | default('Punkte', true) | title }}
+            {{ trigger.event.data.score_type | default('Points', true) | title }}
             {{ trigger.event.data.player | default('', true) }} – {{ trigger.event.data.scoring_team }}
 ```
 
