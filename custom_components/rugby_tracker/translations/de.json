@@ -1,0 +1,47 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Rugby-Team folgen",
+        "description": "Suche das Team, dem du folgen möchtest. Alle Wettbewerbe werden automatisch einbezogen.",
+        "data": { "team_query": "Teamname" }
+      },
+      "pick": {
+        "title": "Team auswählen",
+        "data": { "team_id": "Team" }
+      }
+    },
+    "error": {
+      "cannot_connect": "ESPN ist nicht erreichbar.",
+      "no_teams": "Kein Rugby-Team mit diesem Namen gefunden."
+    },
+    "abort": { "already_configured": "Diesem Team wird bereits gefolgt." }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Rugby Tracker Optionen",
+        "data": {
+          "broadcasts": "TV-Sender (Deutschland)",
+          "kickoff_notice_minutes": "Anpfiff-Erinnerung",
+          "history_years": "Anzahl Spielzeiten für Ergebnisse"
+        },
+        "data_description": {
+          "broadcasts": "Eine Regel pro Zeile: Teil des Wettbewerbsnamens = Sender. '*' gilt für alle übrigen. Beispiel: Rugby Championship = ProSieben MAXX, Joyn",
+          "kickoff_notice_minutes": "Löst so viele Minuten vor Anpfiff ein 'kickoff_soon'-Event aus.",
+          "history_years": "Aktuelle Saison plus frühere."
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "matches": { "name": "Spiele" },
+      "next_match": { "name": "Nächstes Spiel" },
+      "last_result": { "name": "Letztes Ergebnis" }
+    },
+    "binary_sensor": {
+      "live": { "name": "Live" }
+    }
+  }
+}

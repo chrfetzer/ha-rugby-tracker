@@ -1,0 +1,47 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Follow a rugby team",
+        "description": "Search for the team you want to follow. All competitions are included automatically.",
+        "data": { "team_query": "Team name" }
+      },
+      "pick": {
+        "title": "Choose the team",
+        "data": { "team_id": "Team" }
+      }
+    },
+    "error": {
+      "cannot_connect": "ESPN could not be reached.",
+      "no_teams": "No rugby team found for this name."
+    },
+    "abort": { "already_configured": "This team is already being followed." }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Rugby Tracker options",
+        "data": {
+          "broadcasts": "Broadcasters (Germany)",
+          "kickoff_notice_minutes": "Kickoff reminder",
+          "history_years": "Seasons of results to show"
+        },
+        "data_description": {
+          "broadcasts": "One rule per line: part of the competition name = channels. '*' is the fallback. Example: Rugby Championship = ProSieben MAXX, Joyn",
+          "kickoff_notice_minutes": "Fires a 'kickoff_soon' event this many minutes before kickoff.",
+          "history_years": "Current season plus earlier ones."
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "matches": { "name": "Matches" },
+      "next_match": { "name": "Next match" },
+      "last_result": { "name": "Last result" }
+    },
+    "binary_sensor": {
+      "live": { "name": "Live" }
+    }
+  }
+}
