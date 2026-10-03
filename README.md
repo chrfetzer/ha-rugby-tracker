@@ -18,8 +18,10 @@ Includes a dashboard card made for wall tablets:
 2. Install **Rugby Tracker**, restart Home Assistant.
 3. *Settings → Devices & services → Add integration → Rugby Tracker*, search `South Africa`, pick the team.
 
-The card is registered by the integration itself; no extra dashboard resource is needed.
-(After an update, reload the browser/app on the wall tablet once.)
+The integration adds the card to your dashboard resources itself (`/rugby_tracker/rugby-tracker-card.js`)
+and bumps its version after each update, so tablets pick up new card versions.
+If you still see *Custom element doesn't exist*, reload the page once or, in the Companion app,
+use *Settings → Companion app → Troubleshooting → Reset frontend cache*.
 
 ## Card
 

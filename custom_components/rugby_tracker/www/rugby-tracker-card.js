@@ -1,5 +1,5 @@
 /* Rugby Tracker card – served by the rugby_tracker integration. */
-const CARD_VERSION = "0.1.0";
+const CARD_VERSION = "0.1.1";
 
 const I18N = {
   de: {
