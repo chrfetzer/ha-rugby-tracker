@@ -14,7 +14,7 @@ Includes a dashboard card made for wall tablets:
 
 ## Installation (HACS)
 
-1. HACS → ⋮ → *Custom repositories* → add `https://github.com/OWNER/ha-rugby-tracker`, type *Integration*.
+1. HACS → ⋮ → *Custom repositories* → add `https://github.com/chrfetzer/ha-rugby-tracker`, type *Integration*.
 2. Install **Rugby Tracker**, restart Home Assistant.
 3. *Settings → Devices & services → Add integration → Rugby Tracker*, search `South Africa`, pick the team.
 
