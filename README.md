@@ -9,7 +9,7 @@ Includes a dashboard card made for wall tablets:
 - **Live** hero with score, match minute, scoring timeline (tries, kicks, cards) – refreshes every 20 s
 - **Next match** with countdown, venue and German TV channels (ProSieben MAXX / ran.de / Joyn by default)
 - **Fixtures**, **results grouped by tournament** (filter chips), **standings** and **lineups**
-- Country flags plus team crests, German/English, follows your HA light/dark theme
+- Team crests (Springbok, fern, Wallaby …) with country-flag fallback, German/English, follows your HA light/dark theme
 - Works for any team ESPN covers (national sides, clubs like the Bulls or Stormers); add one entry per team
 
 ## Installation (HACS)
@@ -32,7 +32,7 @@ entity: sensor.south_africa_spiele   # the "Matches"/"Spiele" sensor
 | --- | --- | --- |
 | `entity` | – | The *Matches* sensor of the team |
 | `title` | team name | Header text; `""` hides the header |
-| `badges` | `both` | `flag`, `logo` (team crest) or `both` (flag with crest) |
+| `badges` | `logo` | `logo` (union crest, e.g. Springbok, All Blacks fern; flag if ESPN has none), `flag`, or `both` (flag with small crest) |
 | `default_tab` | `upcoming` | `upcoming`, `results`, `table`, `lineup` |
 | `upcoming_count` | `8` | Number of fixtures in the list |
 | `show_timeline` | `true` | Scoring timeline in the live/last-match panel |

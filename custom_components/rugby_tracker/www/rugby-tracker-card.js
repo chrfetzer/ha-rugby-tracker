@@ -57,7 +57,7 @@ class RugbyTrackerCard extends HTMLElement {
 
   setConfig(config) {
     if (!config.entity) throw new Error("entity is required");
-    this._config = { badges: "both", upcoming_count: 8, show_timeline: true, ...config };
+    this._config = { badges: "logo", upcoming_count: 8, show_timeline: true, ...config };
     this._tab = config.default_tab || "upcoming";
     this._filter = "all";
     this._table = null;
@@ -132,12 +132,26 @@ class RugbyTrackerCard extends HTMLElement {
   _badge(team, size = "m") {
     const mode = this._config.badges;
     const flag = team.flag ? `<img class="flag" src="${esc(team.flag)}" alt="">` : "";
-    const logo = team.logo ? `<img class="logo" src="${esc(team.logo)}" alt="">` : "";
+    // ESPN serves an empty file for teams without a crest (e.g. Germany): fall back to the flag.
+    const onError = team.flag
+      ? `this.onerror=null;this.className='flag';this.src='${esc(team.flag)}';this.closest('.badge').classList.replace('is-logo','is-flag')`
+      : `this.closest('.badge').classList.add('no-img');this.remove()`;
+    const logo = team.logo ? `<img class="logo" src="${esc(team.logo)}" alt="" onerror="${onError}">` : "";
+    const abbr = `<span class="abbr">${esc(team.abbr || "")}</span>`;
     let inner;
-    if (mode === "flag") inner = flag || logo;
-    else if (mode === "logo") inner = logo || flag;
-    else inner = flag && logo ? `${flag}<span class="crest">${logo}</span>` : flag || logo;
-    return `<span class="badge ${size} ${team.flag && mode !== "logo" ? "is-flag" : "is-logo"}">${inner || esc(team.abbr)}</span>`;
+    let kind;
+    if (mode === "flag") {
+      inner = flag || logo;
+      kind = flag ? "is-flag" : "is-logo";
+    } else if (mode === "both" && flag && logo) {
+      const crest = `<img class="logo" src="${esc(team.logo)}" alt="" onerror="this.parentNode.remove()">`;
+      inner = `${flag}<span class="crest">${crest}</span>`;
+      kind = "is-flag";
+    } else {
+      inner = logo || flag;
+      kind = logo ? "is-logo" : "is-flag";
+    }
+    return `<span class="badge ${size} ${inner ? kind : "no-img"}">${inner}${abbr}</span>`;
   }
 
   _countdown(date) {
@@ -384,7 +398,7 @@ class RugbyTrackerCard extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>${STYLE}</style>
-      <ha-card style="--rt-accent:${esc(accent)}">
+      <ha-card class="${this._hass?.themes?.darkMode ? "dark" : ""}" style="--rt-accent:${esc(accent)}">
         ${title ? `<div class="head">${team.name ? this._badge(team, "s") : ""}<span class="title">${esc(title)}</span></div>` : ""}
         ${heroes}
         <nav class="tabs">${tabs.map(([k, label]) => `<button class="tab ${k === this._tab ? "on" : ""}" data-tab="${k}">${label}</button>`).join("")}</nav>
@@ -420,7 +434,13 @@ const STYLE = `
   .badge.s { width: 30px; height: 20px; } .badge.s .crest { display: none; }
   .badge.xl { width: 84px; height: 56px; }
   .badge.is-logo.s, .badge.is-logo.xs { height: 26px; width: 26px; }
-  .badge.is-logo.xl { width: 72px; height: 72px; }
+  .badge.is-logo.xl { width: 80px; height: 80px; }
+  .badge .abbr { display: none; }
+  .badge.no-img .abbr { display: inline; }
+  /* Most ESPN crests have no dark variant (the All Blacks fern is black): give them a light tile. */
+  .dark .badge.is-logo { background: #f2f2f2; border-radius: 7px; padding: 3px; box-sizing: border-box; }
+  .dark .badge.is-logo.xl { border-radius: 16px; padding: 9px; }
+  .dark .badge.is-logo.xs { padding: 2px; border-radius: 5px; width: 24px; height: 24px; }
 
   /* hero */
   .hero { margin: 8px 12px 4px; padding: 14px 16px 12px; border-radius: 16px;
