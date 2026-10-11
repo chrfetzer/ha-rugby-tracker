@@ -475,7 +475,7 @@ const STYLE = `
   .card-yellow { background: #fbc02d; } .card-red { background: #d32f2f; }
 
   /* tabs & filters */
-  .tabs { display: flex; gap: 4px; padding: 10px 12px 0; border-bottom: 1px solid var(--divider-color); overflow-x: auto; }
+  .tabs { display: flex; gap: 4px; padding: 10px 12px 0; border-bottom: 1px solid var(--divider-color); overflow-x: auto; scrollbar-width: none; }
   .tab { background: none; border: 0; padding: 10px 14px; border-bottom: 3px solid transparent; color: var(--secondary-text-color); font-weight: 600; white-space: nowrap; }
   .tab.on { color: var(--primary-text-color); border-bottom-color: var(--rt-accent); }
   .content { padding: 6px 12px 14px; }
